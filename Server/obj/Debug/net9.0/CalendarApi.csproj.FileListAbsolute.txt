@@ -1002,3 +1002,4 @@
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/Server/obj/Debug/net9.0/CalendarApi.pdb
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/Server/obj/Debug/net9.0/CalendarApi.genruntimeconfig.cache
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/Server/obj/Debug/net9.0/ref/CalendarApi.dll
+/Users/praveenkumar/Desktop/User/Server/obj/Debug/net9.0/CalendarApi.sourcelink.json

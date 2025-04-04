@@ -2149,10 +2149,11 @@
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/User/obj/Debug/net9.0/compressed/vonoyqj3pg-0vhw16tg0e.gz
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/User/obj/Debug/net9.0/compressed/msh1dqueyp-m7deiyt7e3.gz
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/User/obj/Debug/net9.0/compressed/zanj04nbv0-i6aqaqacjx.gz
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.pkdm1k4jz9.pdb
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.96zb2ae82p.wasm
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.pkdm1k4jz9.pdb.gz
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.96zb2ae82p.wasm.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/vonoyqj3pg-96zb2ae82p.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/msh1dqueyp-pkdm1k4jz9.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/zanj04nbv0-wkluej43u8.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/User.sourcelink.json
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.97t3ewy86z.pdb
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.v06w97xeku.wasm
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.97t3ewy86z.pdb.gz
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.v06w97xeku.wasm.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/vonoyqj3pg-v06w97xeku.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/msh1dqueyp-97t3ewy86z.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/zanj04nbv0-jdi7yy2ow2.gz
