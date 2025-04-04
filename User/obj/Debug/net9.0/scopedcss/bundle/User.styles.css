@@ -1,0 +1,89 @@
+/* /Pages/Holidays.razor.rz.scp.css */
+body[b-4w0gjtgoqw] {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: Arial, sans-serif;
+}
+
+h3[b-4w0gjtgoqw] {
+    color: #1e90ff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h4[b-4w0gjtgoqw] {
+    color: #1e90ff;
+    margin-bottom: 10px;
+}
+
+.holiday-boxes[b-4w0gjtgoqw] {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.permanent-holidays[b-4w0gjtgoqw], .optional-holidays[b-4w0gjtgoqw] {
+    width: 45%;
+    background-color: #d3d3d3;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.holiday-table[b-4w0gjtgoqw] {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f5f5f5;
+}
+
+.holiday-table th[b-4w0gjtgoqw] {
+    background-color: #1e90ff;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+}
+
+.holiday-table td[b-4w0gjtgoqw] {
+    padding: 10px;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+}
+
+.holiday-table tr:nth-child(even)[b-4w0gjtgoqw] {
+    background-color: #ffffff;
+}
+
+.holiday-table tr:hover[b-4w0gjtgoqw] {
+    background-color: #87cefa;
+}
+
+.error-message[b-4w0gjtgoqw] {
+    color: #000000;
+    background-color: rgb(66, 200, 100);
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+p[b-4w0gjtgoqw] {
+    text-align: center;
+    color: #000000;
+}
+
+.save-section[b-4w0gjtgoqw] {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.save-button[b-4w0gjtgoqw] {
+    padding: 8px 16px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.save-button:hover[b-4w0gjtgoqw] {
+    background-color: #4682b4;
+}
