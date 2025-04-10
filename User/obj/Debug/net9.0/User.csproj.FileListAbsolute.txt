@@ -2149,11 +2149,11 @@
 /Users/praveenkumar/Desktop/User-Calendar-Final-main 2/User/obj/Debug/net9.0/compressed/zanj04nbv0-i6aqaqacjx.gz
 /Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/User.sourcelink.json
 /Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/omjbyatpkr-rxcsfmw850.gz
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.d5m1g9rxe4.pdb
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.ct9h7ljp0k.wasm
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.d5m1g9rxe4.pdb.gz
-/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.ct9h7ljp0k.wasm.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/vonoyqj3pg-ct9h7ljp0k.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/msh1dqueyp-d5m1g9rxe4.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/zanj04nbv0-46s1us4zfi.gz
-/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/y6cfw2kpu1-fh3abkfd0i.gz
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.bgs64bumvv.pdb
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.yq900yz2q0.wasm
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.bgs64bumvv.pdb.gz
+/Users/praveenkumar/Desktop/User/User/bin/Debug/net9.0/wwwroot/_framework/User.yq900yz2q0.wasm.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/vonoyqj3pg-yq900yz2q0.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/msh1dqueyp-bgs64bumvv.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/zanj04nbv0-x98jyrb4w5.gz
+/Users/praveenkumar/Desktop/User/User/obj/Debug/net9.0/compressed/y6cfw2kpu1-7ijzr0xh5q.gz

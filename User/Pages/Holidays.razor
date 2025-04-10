@@ -7,7 +7,6 @@
 <h3>Holiday List</h3>
 
 <div class="holiday-boxes">
-    
     <div class="permanent-holidays">
         <h4>Permanent Holidays</h4>
         <table class="holiday-table">
@@ -39,7 +38,7 @@
                     <th>Date</th>
                     <th>Day</th>
                     <th>Event</th>
-                    <th>Select</th>
+                    <th>Select<br>(Max 2 Days)</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +67,14 @@
     </div>
 </div>
 
+<!-- Snackbar for success message -->
+@if (showSnackbar)
+{
+    <div class="snackbar success">
+        Successfully Saved optional holidays!
+    </div>
+}
+
 <!-- Loading and Error States -->
 @if (isLoading)
 {
@@ -89,11 +96,11 @@ else if (holidays.Length == 0)
     private Event[] savedHolidays = Array.Empty<Event>();
     private string? errorMessage;
     private bool isLoading = true;
+    private bool showSnackbar = false; // Controls snackbar visibility
     private System.Timers.Timer? timer;
     private int selectedCount => optionalHolidays.Count(h => h.IsSelected);
     private DateTime currentDate = DateTime.Now.Date;
 
-    // Initialize component and start periodic refresh
     protected override async Task OnInitializedAsync()
     {
         await FetchHolidays();
@@ -103,7 +110,6 @@ else if (holidays.Length == 0)
         timer.Start();
     }
 
-    // Fetch holiday data from API
     private async Task FetchHolidays()
     {
         try
@@ -146,7 +152,6 @@ else if (holidays.Length == 0)
         }
     }
 
-    // Refresh holiday data periodically
     private async Task RefreshHolidays()
     {
         currentDate = DateTime.Now.Date;
@@ -168,7 +173,6 @@ else if (holidays.Length == 0)
         return !IsFutureDate(holiday.Date) || (selectedCount >= 2 && !holiday.IsSelected);
     }
 
-    // Update selection state, enforce max 2 selections
     private async Task UpdateSelection()
     {
         if (selectedCount > 2)
@@ -185,7 +189,6 @@ else if (holidays.Length == 0)
         await InvokeAsync(StateHasChanged);
     }
 
-    // Save selected holidays to API
     private async Task SaveSelection()
     {
         try
@@ -219,10 +222,11 @@ else if (holidays.Length == 0)
                 return;
             }
 
-            errorMessage = "Successfully Saved optional holidays!";
+            // Show snackbar instead of setting errorMessage
+            showSnackbar = true;
             await FetchHolidays();
-            await Task.Delay(2000);
-            errorMessage = null;
+            await Task.Delay(2000); // Snackbar visible for 2 seconds
+            showSnackbar = false;
         }
         catch (Exception ex)
         {
@@ -249,7 +253,6 @@ else if (holidays.Length == 0)
         return string.Empty;
     }
 
-    // Cleanup timer resources
     public void Dispose()
     {
         if (timer != null)
