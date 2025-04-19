@@ -13,29 +13,29 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = User
 build_property.RootNamespace = User
-build_property.ProjectDir = /Users/praveenkumar/Desktop/User/User/
+build_property.ProjectDir = /Users/praveenkumar/Desktop/User /User/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/praveenkumar/Desktop/User/User
+build_property.MSBuildProjectDirectory = /Users/praveenkumar/Desktop/User /User
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/praveenkumar/Desktop/User/User/App.razor]
+[/Users/praveenkumar/Desktop/User /User/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/praveenkumar/Desktop/User/User/Layout/MainLayout.razor]
+[/Users/praveenkumar/Desktop/User /User/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/praveenkumar/Desktop/User/User/Pages/Holidays.razor]
+[/Users/praveenkumar/Desktop/User /User/Pages/Holidays.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9saWRheXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/praveenkumar/Desktop/User/User/_Imports.razor]
+[/Users/praveenkumar/Desktop/User /User/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

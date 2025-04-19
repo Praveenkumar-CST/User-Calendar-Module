@@ -1,6 +1,6 @@
 @page "/holidays"
-@inject HttpClient Http
-@inject NavigationManager Navigation
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
 @implements IDisposable
 @using HolidayApp.Models
 
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var holiday in permanentHolidays.OrderByDescending(h => DateTime.Parse(h.Date)))
+                @foreach (var holiday in PermanentHolidays.OrderByDescending(h => DateTime.Parse(h.Date)))
                 {
                     <tr>
                         <td>@FormatDateWithoutDay(holiday.Date)</td>
@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var holiday in optionalHolidays.OrderByDescending(h => DateTime.Parse(h.Date)))
+                @foreach (var holiday in OptionalHolidays.OrderByDescending(h => DateTime.Parse(h.Date)))
                 {
                     <tr>
                         <td>@FormatDateWithoutDay(holiday.Date)</td>
@@ -51,133 +51,140 @@
                         <td>
                             <input type="checkbox"
                                    @bind="holiday.IsSelected"
-                                   @bind:after="async () => await UpdateSelection()"
+                                   @bind:after="async () => await UpdateSelectionAsync()"
                                    disabled="@IsCheckboxDisabled(holiday)" />
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        @if (selectedCount > 0)
+        @if (SelectedCount > 0)
         {
             <div class="save-section">
-                <button class="save-button" @onclick="SaveSelection">Save Selection (@selectedCount selected)</button>
+                <button class="save-button" @onclick="SaveSelectionAsync">Save Selection (@SelectedCount selected)</button>
             </div>
         }
     </div>
 </div>
 
-<!-- Snackbar for success message -->
-@if (showSnackbar)
+@if (IsSnackbarVisible)
 {
     <div class="snackbar success">
-        Successfully Saved optional holidays!
+        Successfully saved optional holidays!
     </div>
 }
 
-<!-- Loading and Error States -->
-@if (isLoading)
+@if (IsLoading)
 {
     <p>Loading holidays...</p>
 }
-else if (errorMessage != null)
+else if (!string.IsNullOrEmpty(ErrorMessage))
 {
-    <p class="error-message">@errorMessage</p>
+    <p class="error-message">@ErrorMessage</p>
 }
-else if (holidays.Length == 0)
+else if (AllHolidays.Length == 0)
 {
     <p>No holidays found for 2025.</p>
 }
 
 @code {
-    private Event[] holidays = Array.Empty<Event>();
-    private Event[] permanentHolidays = Array.Empty<Event>();
-    private Event[] optionalHolidays = Array.Empty<Event>();
-    private Event[] savedHolidays = Array.Empty<Event>();
-    private string? errorMessage;
-    private bool isLoading = true;
-    private bool showSnackbar = false; // Controls snackbar visibility
-    private System.Timers.Timer? timer;
-    private int selectedCount => optionalHolidays.Count(h => h.IsSelected);
-    private DateTime currentDate = DateTime.Now.Date;
+    private static readonly int MaxSelections = 2;
+    private static readonly int SnackbarDurationMs = 2000;
+    private static readonly double RefreshIntervalMs = 10000000;
 
+    private Event[] AllHolidays { get; set; } = Array.Empty<Event>();
+    private Event[] PermanentHolidays { get; set; } = Array.Empty<Event>();
+    private Event[] OptionalHolidays { get; set; } = Array.Empty<Event>();
+    private Event[] SavedHolidays { get; set; } = Array.Empty<Event>();
+    private string? ErrorMessage { get; set; }
+    private bool IsLoading { get; set; } = true;
+    private bool IsSnackbarVisible { get; set; }
+    private System.Timers.Timer? _refreshTimer;
+    private int SelectedCount => OptionalHolidays.Count(h => h.IsSelected);
+    private DateTime CurrentDate { get; set; } = DateTime.Now.Date;
     protected override async Task OnInitializedAsync()
     {
-        await FetchHolidays();
-        timer = new System.Timers.Timer(10000000);
-        timer.Elapsed += async (sender, e) => await RefreshHolidays();
-        timer.AutoReset = true;
-        timer.Start();
+        await FetchHolidaysAsync();
+
+        _refreshTimer = new System.Timers.Timer(RefreshIntervalMs);
+        _refreshTimer.Elapsed += async (sender, e) => await RefreshHolidaysAsync();
+        _refreshTimer.AutoReset = true;
+        _refreshTimer.Start();
     }
 
-    private async Task FetchHolidays()
+    // Fetches holidays from the API and updates the component state.
+    private async Task FetchHolidaysAsync()
     {
         try
         {
-            isLoading = true;
-            string url = "http://localhost:5085/api/SavedHolidays";
-            var savedResponse = await Http.GetAsync(url);
-            savedHolidays = await savedResponse.Content.ReadFromJsonAsync<Event[]>() ?? Array.Empty<Event>();
+            IsLoading = true;
+            const string savedHolidaysUrl = "http://localhost:5085/api/SavedHolidays";
+            var savedResponse = await HttpClient.GetAsync(savedHolidaysUrl);
+            SavedHolidays = await savedResponse.Content.ReadFromJsonAsync<Event[]>() ?? Array.Empty<Event>();
 
-            url = "http://localhost:5085/api/Events";
-            var httpResponse = await Http.GetAsync(url);
+            const string eventsUrl = "http://localhost:5085/api/Events";
+            var httpResponse = await HttpClient.GetAsync(eventsUrl);
 
             if (httpResponse.IsSuccessStatusCode)
             {
-                holidays = await httpResponse.Content.ReadFromJsonAsync<Event[]>() ?? Array.Empty<Event>();
-                foreach (var holiday in holidays)
+                AllHolidays = await httpResponse.Content.ReadFromJsonAsync<Event[]>() ?? Array.Empty<Event>();
+                foreach (var holiday in AllHolidays)
                 {
-                    var savedHoliday = savedHolidays.FirstOrDefault(s => s.Date == holiday.Date);
+                    var savedHoliday = SavedHolidays.FirstOrDefault(s => s.Date == holiday.Date);
                     if (savedHoliday != null)
                     {
                         holiday.IsSelected = true;
                     }
                 }
-                permanentHolidays = holidays.Where(h => h.HolidayType == "Permanent").ToArray();
-                optionalHolidays = holidays.Where(h => h.HolidayType == "Optional").ToArray();
+                PermanentHolidays = AllHolidays.Where(h => h.HolidayType == "Permanent").ToArray();
+                OptionalHolidays = AllHolidays.Where(h => h.HolidayType == "Optional").ToArray();
             }
             else
             {
-                errorMessage = $"API request failed with status: {httpResponse.StatusCode}";
+                ErrorMessage = $"API request failed with status: {httpResponse.StatusCode}";
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error fetching holidays: {ex.Message}";
+            ErrorMessage = $"Error fetching holidays: {ex.Message}";
         }
         finally
         {
-            isLoading = false;
-            StateHasChanged();
+            IsLoading = false;
+            await InvokeAsync(StateHasChanged);
         }
     }
 
-    private async Task RefreshHolidays()
+    // Refreshes holidays based on the current date.
+    private async Task RefreshHolidaysAsync()
     {
-        currentDate = DateTime.Now.Date;
-        await FetchHolidays();
+        CurrentDate = DateTime.Now.Date;
+        await FetchHolidaysAsync();
         await InvokeAsync(StateHasChanged);
     }
 
+    // Checks if a date is in the future.
     private bool IsFutureDate(string date)
     {
         if (DateTime.TryParse(date, out DateTime parsedDate))
         {
-            return parsedDate.Date > currentDate;
+            return parsedDate.Date > CurrentDate;
         }
         return false;
     }
 
+    // Determines if a checkbox should be disabled.
     private bool IsCheckboxDisabled(Event holiday)
     {
-        return !IsFutureDate(holiday.Date) || (selectedCount >= 2 && !holiday.IsSelected);
+        return !IsFutureDate(holiday.Date) || (SelectedCount >= MaxSelections && !holiday.IsSelected);
     }
 
-    private async Task UpdateSelection()
+    // Updates the selection state, ensuring no more than two holidays are selected.
+    private async Task UpdateSelectionAsync()
     {
-        if (selectedCount > 2)
+        if (SelectedCount > MaxSelections)
         {
-            var firstSelected = optionalHolidays
+            var firstSelected = OptionalHolidays
                 .Where(h => h.IsSelected && IsFutureDate(h.Date))
                 .OrderBy(h => DateTime.Parse(h.Date))
                 .FirstOrDefault();
@@ -189,52 +196,56 @@ else if (holidays.Length == 0)
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task SaveSelection()
+    // Saves the selected optional holidays to the API.
+    private async Task SaveSelectionAsync()
     {
         try
         {
-            var selectedHolidays = optionalHolidays
+            var selectedHolidays = OptionalHolidays
                 .Where(h => h.IsSelected)
                 .Select(h => new { h.Date, EventName = h.Description })
                 .ToArray();
 
-            foreach (var holiday in optionalHolidays)
+            foreach (var holiday in OptionalHolidays)
             {
                 if (!holiday.IsSelected)
                 {
-                    var savedHoliday = savedHolidays.FirstOrDefault(s => s.Date == holiday.Date);
+                    var savedHoliday = SavedHolidays.FirstOrDefault(s => s.Date == holiday.Date);
                     if (savedHoliday != null)
                     {
-                        var response = await Http.DeleteAsync($"http://localhost:5085/api/SavedHolidays/{savedHoliday.Id}");
+                        var response = await HttpClient.DeleteAsync(
+                            $"http://localhost:5085/api/SavedHolidays/{savedHoliday.Id}");
                         if (!response.IsSuccessStatusCode)
                         {
-                            errorMessage = $"Failed to delete holiday with ID {savedHoliday.Id}. Status: {response.StatusCode}";
+                            ErrorMessage = $"Failed to delete holiday with ID {savedHoliday.Id}. " +
+                                           $"Status: {response.StatusCode}";
                             return;
                         }
                     }
                 }
             }
 
-            var postResponse = await Http.PostAsJsonAsync("http://localhost:5085/api/SavedHolidays", selectedHolidays);
+            var postResponse = await HttpClient.PostAsJsonAsync(
+                "http://localhost:5085/api/SavedHolidays", selectedHolidays);
             if (!postResponse.IsSuccessStatusCode)
             {
-                errorMessage = $"Failed to save holidays. Status: {postResponse.StatusCode}";
+                ErrorMessage = $"Failed to save holidays. Status: {postResponse.StatusCode}";
                 return;
             }
 
-            // Show snackbar instead of setting errorMessage
-            showSnackbar = true;
-            await FetchHolidays();
-            await Task.Delay(2000); // Snackbar visible for 2 seconds
-            showSnackbar = false;
+            IsSnackbarVisible = true;
+            await FetchHolidaysAsync();
+            await Task.Delay(SnackbarDurationMs);
+            IsSnackbarVisible = false;
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error updating selection: {ex.Message}";
+            ErrorMessage = $"Error updating selection: {ex.Message}";
         }
         await InvokeAsync(StateHasChanged);
     }
 
+    // Formats a date string without the day of the week.
     private string FormatDateWithoutDay(string date)
     {
         if (DateTime.TryParse(date, out DateTime parsedDate))
@@ -244,6 +255,7 @@ else if (holidays.Length == 0)
         return date;
     }
 
+    // Gets the day of the week for a given date.
     private string GetDayOfWeek(string date)
     {
         if (DateTime.TryParse(date, out DateTime parsedDate))
@@ -253,12 +265,13 @@ else if (holidays.Length == 0)
         return string.Empty;
     }
 
+    // Disposes of the refresh timer.
     public void Dispose()
     {
-        if (timer != null)
+        if (_refreshTimer != null)
         {
-            timer.Stop();
-            timer.Dispose();
+            _refreshTimer.Stop();
+            _refreshTimer.Dispose();
         }
     }
 }

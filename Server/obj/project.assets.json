@@ -5404,11 +5404,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/praveenkumar/Desktop/User/Server/CalendarApi.csproj",
+      "projectUniqueName": "/Users/praveenkumar/Desktop/User /Server/CalendarApi.csproj",
       "projectName": "CalendarApi",
-      "projectPath": "/Users/praveenkumar/Desktop/User/Server/CalendarApi.csproj",
+      "projectPath": "/Users/praveenkumar/Desktop/User /Server/CalendarApi.csproj",
       "packagesPath": "/Users/praveenkumar/.nuget/packages/",
-      "outputPath": "/Users/praveenkumar/Desktop/User/Server/obj/",
+      "outputPath": "/Users/praveenkumar/Desktop/User /Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/praveenkumar/.nuget/NuGet/NuGet.Config"
@@ -5487,7 +5487,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
